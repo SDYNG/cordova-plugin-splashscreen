@@ -34,14 +34,16 @@ Report issues with this plugin on the [Apache Cordova issue tracker][Apache Cord
 ## Installation
 
     // you may also install directly from this repo
-    cordova plugin add https://github.com/troyz/cordova-plugin-splashscreen.git --save
+    cordova plugin add https://github.com/SDYNG/cordova-plugin-splashscreen.git --save
 
 ## Video support
 
     // set video path, the path must under the www folder.
     // 设置视频的路径，该路径必须存在于 www 目录下
-    <preference name="SplashScreenVideoPath" value="assets/welcome_movie.mp4" />
-
+        // android
+        <preference name="SplashScreenVideoPath" value="assets/openAnimate.mp4" />
+        // ios
+        <preference name="SplashScreenVideoPath" value="assets/statics/openAnimate.mp4" />
     // set if the video show only once, 
     // 设置视频是否只显示一次
     <preference name="SplashScreenVideoShowOnlyOnce" value="true" />
@@ -50,7 +52,7 @@ Report issues with this plugin on the [Apache Cordova issue tracker][Apache Cord
     // 不传参数时默认使用 config.xml 中 配置的启动视频
     splashScreen.show();
     // or 指定播放特定的视频
-    splashScreen.show('assets/welcome_movie.mp4');
+    splashScreen.show('assets/openAnimate.mp4');
 
 ## Supported Platforms
 
