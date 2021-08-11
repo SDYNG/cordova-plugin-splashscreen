@@ -390,6 +390,8 @@ public class SplashScreen extends CordovaPlugin {
                                 movie_url = videoPath;
                             }
                             String url = webView.getUrl().replace("index.html", movie_url);
+                            Log.e("webView.getUrl0()=====", movie_url);
+                            Log.e("webView.getUrl0()=====", videoPath);
                             Log.e("webView.getUrl0()=====", url);
 
                             try {
@@ -398,7 +400,7 @@ public class SplashScreen extends CordovaPlugin {
                                 {
                                     Log.e("webView.getUrl1()=====", "www/statics/openAnimate.mp4");
                                     AssetManager assetManager = context.getAssets();
-                                    AssetFileDescriptor fileDescriptor = assetManager.openFd("www/statics/openAnimate.mp4");
+                                    AssetFileDescriptor fileDescriptor = assetManager.openFd(url);
                                     player.setDataSource(fileDescriptor.getFileDescriptor(),
                                             fileDescriptor.getStartOffset(),
                                             fileDescriptor.getLength());
