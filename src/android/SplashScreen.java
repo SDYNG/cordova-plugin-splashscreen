@@ -390,17 +390,16 @@ public class SplashScreen extends CordovaPlugin {
                                 movie_url = videoPath;
                             }
                             String url = webView.getUrl().replace("index.html", movie_url);
-//                            Log.e("webView.getUrl0()=====", movie_url);
-//                            Log.e("webView.getUrl0()=====", videoPath);
                             Log.e("webView.getUrl0()=====", url);
 
                             try {
                                 player = new MediaPlayer();
                                 if (url.startsWith("file:///android_asset"))
                                 {
-                                    Log.e("webView.getUrl1()=====", "www/statics/openAnimate.mp4");
+                                  String mUrl = url.replace("file:///android_asset/", "");
+                                    Log.e("webView.getUrl1()=====", mUrl);
                                     AssetManager assetManager = context.getAssets();
-                                    AssetFileDescriptor fileDescriptor = assetManager.openFd("www/statics/openAnimate.mp4");
+                                    AssetFileDescriptor fileDescriptor = assetManager.openFd(mUrl);
                                     player.setDataSource(fileDescriptor.getFileDescriptor(),
                                             fileDescriptor.getStartOffset(),
                                             fileDescriptor.getLength());
@@ -410,6 +409,7 @@ public class SplashScreen extends CordovaPlugin {
                                     player.setDataSource(cordova.getActivity(), Uri.parse(url));
                                 }
 
+                                Log.e("更新url=====", url);
                                 player.setAudioStreamType(AudioManager.STREAM_MUSIC);
                                 player.setDisplay(surfaceHolder);
                                 // 设置显示视频显示在SurfaceView上
