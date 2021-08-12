@@ -30,6 +30,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
@@ -54,7 +55,10 @@ import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -394,22 +398,39 @@ public class SplashScreen extends CordovaPlugin {
 
                             try {
                                 player = new MediaPlayer();
-                                if (url.startsWith("file:///android_asset"))
-                                {
-                                  String mUrl = url.replace("file:///android_asset/", "");
-                                    Log.e("webView.getUrl1()=====", mUrl);
+
+//                              InputStream iStream = context.getAssets().open("www/statics/openAnimate.mp4");
+//                              byte[] buffer = new byte[1024];
+//                              int count = iStream.read(buffer);
+//                              if (isHaveSDCard()) {
+//                                File f = new File(Environment.getExternalStorageDirectory().getPath() + "/www/");
+//                                if (!f.exists()) {
+//                                  f.mkdirs();
+//                                }
+//
+//                                FileOutputStream fos = new FileOutputStream(Environment.getExternalStorageDirectory().getPath() + "www/statics/openAnimate.mp4");
+//                                fos.write(buffer, 0, count);
+//                                fos.close();
+//                              }
+
+//                                if (url.startsWith("file:///android_asset"))
+//                                {
+//                                    Log.e("webView.getUrl1()=====", "www/statics/openAnimate.mp4");
                                     AssetManager assetManager = context.getAssets();
-                                    AssetFileDescriptor fileDescriptor = assetManager.openFd(mUrl);
-                                    player.setDataSource(fileDescriptor.getFileDescriptor(),
+                                    AssetFileDescriptor fileDescriptor = assetManager.openFd("www/statics/openAnimate.mp4");
+                                    Log.e("AssetFile=====", url);
+                                    Log.e("AssetFile=====", url);
+                                    Log.e("AssetFile=====", url);
+
+                              player.setDataSource(fileDescriptor.getFileDescriptor(),
                                             fileDescriptor.getStartOffset(),
                                             fileDescriptor.getLength());
-                                }
-                                else
-                                {
-                                    player.setDataSource(cordova.getActivity(), Uri.parse(url));
-                                }
+//                                }
+//                                else
+//                                {
+//                                    player.setDataSource(cordova.getActivity(), Uri.parse("www/statics/openAnimate.mp4"));
+//                                }
 
-                                Log.e("更新url=====", url);
                                 player.setAudioStreamType(AudioManager.STREAM_MUSIC);
                                 player.setDisplay(surfaceHolder);
                                 // 设置显示视频显示在SurfaceView上
@@ -513,7 +534,15 @@ public class SplashScreen extends CordovaPlugin {
             }
         });
     }
-
+  // 判断SDCard是否存在
+  private boolean isHaveSDCard() {
+    String status = Environment.getExternalStorageState();
+    if (status.equals(Environment.MEDIA_MOUNTED)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
     // Show only spinner in the center of the screen
     private void spinnerStart() {
         cordova.getActivity().runOnUiThread(new Runnable() {
